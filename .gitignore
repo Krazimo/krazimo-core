@@ -154,3 +154,9 @@ vite.config.ts.timestamp-*
 # build output
 dist/
 dist-test/
+
+# Internal engineering notes. Tracked in the private repo, never in the public one.
+# Excluded at copy time when the public repo was built, which guarded nothing against
+# it being re-added later; this is the guard. CONTRIBUTING.md is the public-facing
+# version of the same material.
+CLAUDE.md
