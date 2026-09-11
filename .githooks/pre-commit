@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+#
+# Fast gates, on every commit. Anything slow belongs in pre-push.
+#
+# These two run against the STAGED content only, so they finish in well under a
+# second on a normal commit. That matters more than it sounds: a hook that takes
+# ten seconds is a hook people start passing --no-verify to, and a hook that is
+# always bypassed protects nothing.
+#
+# Bypass deliberately with: git commit --no-verify
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+
+echo "pre-commit: publishable + secrets (staged only)"
+
+node scripts/check-publishable.mjs --staged
+
+if command -v gitleaks >/dev/null 2>&1; then
+	# The staged diff, piped in. NOT `gitleaks protect --staged`: that subcommand
+	# was removed in gitleaks 8.x, and the binary still exits 0 for it having
+	# scanned nothing — a check that silently passes is worse than no check.
+	git diff --cached | gitleaks stdin --no-banner --redact
+else
+	echo "  gitleaks not installed — 'brew install gitleaks' closes the secrets gap locally"
+fi

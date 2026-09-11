@@ -1,0 +1,23 @@
+{
+	"_why": "Truncated SHA-256 of names that must never appear here: past clients, their products and programmes, and internal systems. These are hashed deliberately. This file is published, so a plaintext list would hand a reader the very names it exists to keep out, and the check would become the leak. A hash still matches and still cannot be read backwards.",
+	"_how": "The scanner normalises each line to lowercase words and hashes every 1-, 2- and 3-word run. To add a term: node scripts/check-publishable.mjs --hash \"some name\", then paste the result here.",
+	"maxGram": 3,
+	"hashes": [
+		"071f984ccd0944cb",
+		"2e9581fc322ad897",
+		"31f61ed3e6e210c5",
+		"3997ab6a7efbe504",
+		"476f0b52edaa9528",
+		"4e19a38218e0972b",
+		"567b9b1d19c2e03e",
+		"6aae70609fb3f511",
+		"74f8b187fcc4e194",
+		"9ac7cbcecfb0fd7a",
+		"a4fd433756e3d951",
+		"a8a813c3696ec5a9",
+		"ba2ef21026275cc1",
+		"e3f1fcdc9560c868",
+		"f969ef7bde611273",
+		"fc6c0fc36207b5e3"
+	]
+}

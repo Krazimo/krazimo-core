@@ -1,0 +1,62 @@
+{
+  "name": "@krazimo/core",
+  "version": "0.1.0",
+  "description": "Grounded agent engine: index-walk retrieval that refuses unlisted documents, plus deterministic policy guards.",
+  "license": "Apache-2.0",
+  "keywords": [
+    "agent",
+    "rag",
+    "retrieval",
+    "grounding",
+    "llm",
+    "policy",
+    "guardrails",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Krazimo/krazimo-core.git"
+  },
+  "homepage": "https://github.com/Krazimo/krazimo-core#readme",
+  "bugs": {
+    "url": "https://github.com/Krazimo/krazimo-core/issues"
+  },
+  "author": "Krazimo",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./retrieval": "./dist/retrieval/index.js",
+    "./models": "./dist/models/index.js",
+    "./policy": "./dist/policy/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "tsc -p tsconfig.test.json && node --test \"dist-test/**/*.test.js\"",
+    "check:publishable": "node scripts/check-publishable.mjs",
+    "check:licences": "node scripts/check-licences.mjs",
+    "test:coverage": "tsc -p tsconfig.test.json && node --test --experimental-test-coverage \"dist-test/**/*.test.js\"",
+    "prepare": "git config core.hooksPath .githooks || true",
+    "prepublishOnly": "npm run build && npm run typecheck && npm test && npm run check:publishable && npm run check:licences"
+  },
+  "dependencies": {
+    "@ai-sdk/amazon-bedrock": "^5.0.61",
+    "@ai-sdk/openai": "^4.0.46",
+    "@aws-sdk/credential-providers": "^3.1116.0",
+    "@marcbachmann/cel-js": "^8.0.0",
+    "@openrouter/ai-sdk-provider": "^3.0.0",
+    "ai": "^7.0.77",
+    "yaml": "^2.9.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  }
+}

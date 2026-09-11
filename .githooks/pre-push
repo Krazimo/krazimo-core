@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#
+# The full gates, on push. This is the last point at which anything can still be
+# taken back, so it runs everything CI runs rather than a faster subset.
+#
+# The split from pre-commit is deliberate: commits are frequent and must stay
+# instant, pushes are rare and can afford a typecheck and 80 tests.
+#
+# Bypass deliberately with: git push --no-verify
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+
+echo "pre-push: typecheck, tests, publishable, licences, secrets"
+
+npm run typecheck
+npm test
+npm run check:publishable
+npm run check:licences
+
+if command -v gitleaks >/dev/null 2>&1; then
+	gitleaks git --no-banner --redact .
+else
+	echo "  gitleaks not installed — CI will scan, but after the push, not before"
+fi

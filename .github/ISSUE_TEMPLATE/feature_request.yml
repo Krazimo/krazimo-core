@@ -1,0 +1,27 @@
+name: Proposal
+description: Suggest a change to how the engine behaves.
+labels: ["proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Two things this project will not take, so nobody spends an evening on them:
+        a retrieval change that lets the agent open a document no listing offered,
+        and anything that gives the engine a concept of a tenant. See CONTRIBUTING.md.
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What you were trying to do, not the fix you have in mind.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you propose
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What you tried or considered instead

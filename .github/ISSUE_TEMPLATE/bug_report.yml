@@ -1,0 +1,46 @@
+name: Bug report
+description: Something behaves differently from what the documentation says.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please do not report anything exploitable here. See SECURITY.md for the private route.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected instead
+      placeholder: Include the exact error text if there is one.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce it
+      description: >-
+        The smallest agent config, policy and knowledge-base shape that shows the
+        problem. Retrieval behaviour depends on the tree, so the layout matters as
+        much as the code.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node version
+      placeholder: "node --version"
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Model and provider
+      description: Only if the turn reached a model.
+      placeholder: "openrouter:..., or bedrock:..."

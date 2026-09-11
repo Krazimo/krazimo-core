@@ -1,0 +1,48 @@
+# Build, typecheck and test.
+#
+# Runs on push as well as pull request. This repo is public, so Actions minutes
+# are free, and a public repo has contributors who push branches directly.
+#
+# The local guard is `scripts/install-hooks.sh` in the platform checkout, which
+# runs the same commands on pre-push and costs nothing.
+name: ci
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          # Matches the Dockerfile's node:22-slim. `engines` says >=20; 22 is
+          # what actually runs in production, so it is what gets tested.
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Build first: `npm test` compiles to dist-test/ separately, but the
+      # platform imports dist/, and a build failure there is a failure that
+      # only shows up in the other repo if this step is skipped.
+      - run: npm run build
+
+      - run: npm run typecheck
+
+      - run: npm test
+
+      # Last gate before anything reaches a public branch: no client, no
+      # credential, no internal system. See scripts/check-publishable.mjs for
+      # why a denylist alone was not enough.
+      - run: npm run check:publishable
+
+      # A copyleft transitive dependency would make the Apache-2.0 release wrong.
+      - run: npm run check:licences
